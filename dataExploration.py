@@ -1,12 +1,10 @@
 import tiffile
 import pandas as pd
 
-# this was for the orion dataset. we are using a different dataset.
-# img = tiffile.imread("data/18459_LSP10353_US_SCAN_OR_001__093059-registered.ome.tif")
-# mask = tiffile.imread("data/P37_S29-CRC01-mask.ome.tif")
-#
-# markers = pd.read_csv("data/markers.csv")
-#
-# print("this is the image we are looking at ", img.shape)
-# print("this is the mask we are looking at ", mask.shape)
-# print("this is the markers we are looking at ", markers.shape)
+# we have changed this again and again but we are FINALLY using the dataset I actually like
+# we are using the CheXpert set, a subset of it that I found on kaggle
+# it might be a little small to do everything that I want it to do... given that we ahve 14 different types of diseases
+# calling it small seems ridiculous, given that its like 12 GB or whatever. I digress.
+# lets get the PD in here and just start looking at stuff.
+# lets make a clean up script that lets us use the correct file paths and go from there.
+
