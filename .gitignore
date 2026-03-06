@@ -1,1 +1,4 @@
+# ignore anything in the data folder
 data/
+# ignore anything in the IU-xray folder, bc its 13GB
+IU-xray/

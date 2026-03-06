@@ -1,10 +1,24 @@
 import tiffile
 import pandas as pd
 
-# we have changed this again and again but we are FINALLY using the dataset I actually like
-# we are using the CheXpert set, a subset of it that I found on kaggle
-# it might be a little small to do everything that I want it to do... given that we ahve 14 different types of diseases
-# calling it small seems ridiculous, given that its like 12 GB or whatever. I digress.
-# lets get the PD in here and just start looking at stuff.
-# lets make a clean up script that lets us use the correct file paths and go from there.
+from dataloaderCreator import *
 
+# we have changed this again and again but we are FINALLY using the dataset I actually like
+# this is like seeing bloddy handprints on the wall. I changed the dataset again.
+# this time to the IU-xray dataset, as its probably the largest one I can get my hands on without causing a plethora of HIPAA violations.
+
+if __name__ == "__main__":
+    # this contains the metadata that we want for our MLP
+    projections_path = 'IU-xray/indiana_projections.csv'
+    # this contains the labelling we want for our image CNN
+    reports_path = 'IU-xray/indiana_reports.csv'
+    # and of course, the images
+    image_dir = 'IU-xray/images/images_normalized'
+
+    # DO REMEMBER THAT THIS ONLY DOES PNEUMONIA ATM
+    train_loader, test_loader = get_dataloaders(projections_path, reports_path, image_dir)
+
+    images, labels = next(iter(train_loader))
+    print("iamge batch shape ", images.shape)
+    print("label batch shape ", labels.shape)
+    print("label distribution ", labels.sum().item())

@@ -1,0 +1,91 @@
+# the goal of this file is to train and pickle our MLP so that we can access it later.
+import torch, torch.nn as nn
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from torch.optim.lr_scheduler import StepLR
+
+
+class MLP(nn.Module):
+    def __init__(self, input_nodes=500): # this is specified by the number of keywords that we need.
+        super(MLP, self).__init__()
+
+        self.network = nn.Sequential(
+            # block 1
+            nn.Linear(input_nodes, 256),
+            nn.ReLU(),
+            nn.Dropout(p=0.3),
+
+            # another one
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Dropout(p=0.3),
+
+            # convert it to output.
+            nn.Linear(128, 1),
+            nn.Sigmoid()  # need to squash to 0 or 1.
+        )
+
+    # using nn.sequential makes this look much neater.
+    def forward(self, x):
+        return self.network(x)        # gree hee hee.
+
+
+# using HE initilization for now.
+def weights_init(layer_in):
+    if isinstance(layer_in, nn.Linear):
+        nn.init.kaiming_normal_(layer_in.weight)
+        layer_in.bias.data.fill_(0.0)
+
+# ripped directly from lab 5.
+def train_mlp(model, data_loader, n_epoch=50):
+
+    # Initialize model weights
+    model.apply(weights_init)
+
+    # store the loss and the % correct at each epoch
+    losses_train = np.zeros((n_epoch))
+    errors_train = np.zeros((n_epoch))
+    losses_test = np.zeros((n_epoch))
+    errors_test = np.zeros((n_epoch))
+
+    # choose cross entropy loss function (equation 5.24)
+    loss_function = torch.nn.CrossEntropyLoss()
+    # construct SGD optimizer and initialize learning rate and momentum
+    optimizer = torch.optim.SGD(model.parameters(), lr = 0.05, momentum=0.9)
+    # object that decreases learning rate by half every 10 epochs
+    scheduler = StepLR(optimizer, step_size=10, gamma=0.5)
+
+
+    for epoch in range(n_epoch):
+      # loop over batches
+      for i, batch in enumerate(data_loader):
+        # retrieve inputs and labels for this batch
+        x_batch, y_batch = batch
+        # zero the parameter gradients
+        optimizer.zero_grad()
+        # forward pass -- calculate model output
+        pred = model(x_batch)
+        # compute the loss
+        loss = loss_function(pred, y_batch)
+        # backward pass
+        loss.backward()
+        # SGD update
+        optimizer.step()
+
+      # Run whole dataset to get statistics -- normally wouldn't do this
+      # So we aren't! Simple as, really.
+      # pred_train = model(x_train)
+      # pred_test = model(x_test)
+      # _, predicted_train_class = torch.max(pred_train.data, 1)
+      # _, predicted_test_class = torch.max(pred_test.data, 1)
+      # errors_train[epoch] = 100 - 100 * (predicted_train_class == y_train).float().sum() / len(y_train)
+      # errors_test[epoch]= 100 - 100 * (predicted_test_class == y_test).float().sum() / len(y_test)
+      # losses_train[epoch] = loss_function(pred_train, y_train).item()
+      # losses_test[epoch]= loss_function(pred_test, y_test).item()
+      # print(f'Epoch {epoch:5d}, train loss {losses_train[epoch]:.6f}, train error {errors_train[epoch]:3.2f},  test loss {losses_test[epoch]:.6f}, test error {errors_test[epoch]:3.2f}')
+
+      # tell scheduler to consider updating learning rate
+      scheduler.step()
+
+    return errors_train, errors_test, losses_train, losses_test
