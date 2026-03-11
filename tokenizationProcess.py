@@ -1,8 +1,7 @@
 # this is where we will be doign the NLP portion of htis project
 # our goal is take in the raw text and classify it as normal or abnormal for pneumonia.
 # simple as.
-
-
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -25,6 +24,7 @@ def get_clean_stuff(df, nlp):
         df["indication"].fillna("") + " " +
         df["findings"].fillna("") + " " +
         df["impression"].fillna("")
+        # do NOT put problems in here. bad idea.
     )
 
     df["text_clean"] = df["text"].apply(tokenize, nlp=nlp)
@@ -34,8 +34,5 @@ def get_clean_stuff(df, nlp):
     y = df["pneumonia_label"].values
 
     # X is now our feature matrix , where each row is a paitent, and each column is a wordweight
-    print(X.shape)
-    print(y.shape)
-
     return X, y # give those back to our other guy.
     # now that we have this, we should be able to feed this into the MLP.
