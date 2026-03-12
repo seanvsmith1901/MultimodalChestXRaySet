@@ -25,6 +25,8 @@ if __name__ == "__main__":
 
     print("Creating the DF")
     df = build_master_df(projections_path, reports_path)
+    print(df['pneumonia_label'].value_counts())
+    print(df['pneumonia_label'].value_counts(normalize=True))
 
     print("Creating the MLP")
     # ok now we have to do the freaking NLP stuff in an attempt to understand this better.

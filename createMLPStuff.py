@@ -12,7 +12,9 @@ def create_mlp_model(df, nlp, num_epochs):
     # creates X and Y based on penumonia values and the DF.
     print("starting the model creation process ")
     # this returns X and y as df's to try and use them in the train test split and dataloaders. Don't think its working as intended.
+
     X, y = get_clean_stuff(df, nlp)  # returns a clean X and y that we will need for training later.
+
 
     print("Here is our shape ", X.shape)
 
@@ -31,10 +33,11 @@ def create_mlp_model(df, nlp, num_epochs):
 
     input_nodes = X.shape[1]
     model = MLP(input_nodes)
-
     data_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=100, shuffle=True, worker_init_fn=np.random.seed(1))
 
     errors_train, errors_test, losses_train, losses_test = train_mlp(model, data_loader, num_epochs)
+
+
 
     # lets try to get a rough idea of where we are.
     evaluate_mlp(model, X_test, y_test)

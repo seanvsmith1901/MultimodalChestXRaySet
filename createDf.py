@@ -13,7 +13,7 @@ def build_master_df(projections_path, reports_path):
 
   def label_from_text(row):
     # don't put everythign in there, just a little bit.
-    text = str(row.get("Problems", "")).lower()
+    text = str(row.get("indication", "")).lower()
     return int(any(kw in text for kw in pneumonia_keywords))
 
   df["pneumonia_label"] = df.apply(label_from_text, axis=1)
