@@ -5,6 +5,9 @@ import spacy # small model, don't throw it on GPU.
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 from createMLPStuff import create_mlp_model # we will want this.
+import re
+
+
 
 from mlp import MLP, evaluate_mlp  # bring our custom class in.
 
@@ -25,6 +28,10 @@ if __name__ == "__main__":
 
     print("Creating the DF")
     df = build_master_df(projections_path, reports_path)
+
+    all_problems = df['Problems'].dropna().str.split(';').explode().str.strip().str.lower()
+    print(all_problems.value_counts().head(20))
+
     print(df['pneumonia_label'].value_counts())
     print(df['pneumonia_label'].value_counts(normalize=True))
 
