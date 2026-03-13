@@ -8,5 +8,12 @@
 3/5/2026 - 2 hours. 30 minutes on a literature review, 30 minutes on doing NLP stuff, and then another hour on starting
                     the initial MLP stuff. Created class and started creating data, need to work on splitting it better.
 3/6/2026 - 0.75 hours. More work on MLP creation stuff.
+3/11/2026 - 2 hours. Spent the first hour rounding out our pneumonia predictions - mostly focusing on SMOTE for class
+                    balance and sensitivity training. After that, we realistically capped out on what we could do and
+                    shifted to abnormalities. Rounded of the MLP with reasonable results at abnormality detection from
+                    incident (the least specific form of triage entering)
+3/12/2026 - 0.5 hours. working on making the MLP receive less informaiton (and perhpas throw out the MLP and replace
+                       with an ensemble instead :) )
 
-Current Total: 9 / 30 hours
+
+Current Total: 12.25 / 30 hours

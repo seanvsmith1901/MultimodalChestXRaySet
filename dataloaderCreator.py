@@ -33,7 +33,7 @@ class ChestXRayDataset(Dataset):
       image = self.transform(image)
 
     # label time
-    label = torch.tensor(row["pneumonia_label"], dtype=torch.float32)
+    label = torch.tensor(row["abnormal_label"], dtype=torch.float32)
 
     return image, label
 
@@ -48,7 +48,7 @@ def get_dataloaders(projections_path, reports_path, image_dir, test_size=0.2,
     df,
     test_size=test_size,
     random_state=42,
-    stratify=df["pneumonia_label"], # maintain balanced split between train test for convergence.
+    stratify=df["abnormal_label"], # maintain balanced split between train test for convergence.
   )
 
   # DOING some standard imageNet transformations

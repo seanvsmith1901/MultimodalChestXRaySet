@@ -1,0 +1,17 @@
+3/12/2026 (Started at 5:37 iirc)
+should have started this earlier, but having a kind of documentation as I write this I think could be really cool to have
+and as a proof of work / headspace stuff.
+so right now, we have our MLP that is doing things.
+However, last night, as I walked home all pleased with myself and getting ready to work on the CNN, I realized that
+I don't actually remember what portions of the input data its using.
+Scrambnling back to the office today, I realized that my model has access to WAAY to much information - including the
+indication, findings and impresssion. That is basically worthless for triage - that means the dr has already looked at
+them and given them a full physical. My model then just goes "oh yeah something is MESSED up with him". and right now
+its only trying to identify abnormal paitents, so anything off of 100% is just noise.
+as such, we are going to severely limit the amount of information that he gets.
+I'll try with 3 different levels -- indication only, then indicatino and findings, then indications finding and impression
+of course the indication findings and impresssion will have the highest but I hope we can build osmething somewhat neat
+by putting all this together.
+so lets start there.
+
+gonna try doing more stuff on medium.

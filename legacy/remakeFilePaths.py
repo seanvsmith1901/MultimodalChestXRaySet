@@ -2,10 +2,10 @@ import pandas as pd
 import glob
 
 
-df_train = pd.read_csv("data/train_fixed.csv")
+df_train = pd.read_csv("../data/train_fixed.csv")
 # print("this is the shape of train", df_train.shape)
 #
-df_validation = pd.read_csv("data/validation_fixed.csv")
+df_validation = pd.read_csv("../data/validation_fixed.csv")
 # print("this is the shape of validation", df_validation.shape)
 #
 # print("this is the head of train ", df_train.head())

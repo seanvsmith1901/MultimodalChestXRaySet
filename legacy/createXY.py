@@ -9,11 +9,11 @@ import pickle
 if __name__ == "__main__":
 
     # this contains the metadata that we want for our MLP
-    projections_path = 'IU-xray/indiana_projections.csv'
+    projections_path = '../IU-xray/indiana_projections.csv'
     # this contains the labelling we want for our image CNN
-    reports_path = 'IU-xray/indiana_reports.csv'
+    reports_path = '../IU-xray/indiana_reports.csv'
     # and of course, the images
-    image_dir = 'IU-xray/images/images_normalized'
+    image_dir = '../IU-xray/images/images_normalized'
 
     # having these separate might actually be better.
     df = build_master_df(projections_path, reports_path)

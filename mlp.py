@@ -4,10 +4,15 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from torch.optim.lr_scheduler import StepLR
-
 from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
+from sklearn.metrics import fbeta_score
+import spacy # small model, don't throw it on GPU.
+from tokenizationProcess import get_clean_stuff
+from imblearn.over_sampling import SMOTE
+from torch.utils.data import DataLoader
+from torch.utils.data import TensorDataset, DataLoader
 
-probability_flag = 0.05
+probability_flag = 0.50
 
 
 class MLP(nn.Module):
@@ -41,8 +46,68 @@ def weights_init(layer_in):
         nn.init.kaiming_normal_(layer_in.weight)
         layer_in.bias.data.fill_(0.0)
 
-# ripped directly from lab 5.
-def train_mlp(model, data_loader, y_train, n_epoch=50):
+
+def create_mlp_model(df, mode):
+    nlp = spacy.load("en_core_web_sm")
+    num_epochs = 200
+
+    # creates X and Y based on penumonia values and the DF.
+    print("starting the model creation process ")
+    # this returns X and y as df's to try and use them in the train test split and dataloaders. Don't think its working as intended.
+
+    # this uses a tokenizer to create a better representation of X and Y.
+    X, y = get_clean_stuff(df, nlp, mode=mode)  # returns a clean X and y that we will need for training later.
+
+    print("Here is our shape ", X.shape)
+    print("Post conversion")
+
+    # now I gotta create data loaders. Bleh.
+    X_train_raw, X_test_raw, y_train_raw, y_test_raw = train_test_split(
+        X, y,
+        test_size=0.2,
+        random_state=42,
+        stratify=y
+    )
+    # NOW we apply smote to prevent data leakage.
+    # gonna try adding smote.
+    smote = SMOTE(random_state=42)  # trying to fix some class imbalance
+
+    X_train_bal, y_train_bal = smote.fit_resample(X_train_raw, y_train_raw)
+
+    print(f"Before SMOTE: {X.shape[0]} samples, {y.sum()} positive")
+    print(f"After SMOTE:  {X_train_bal.shape[0]} samples, {y_train_bal.sum()} positive")
+
+    # we GOTTA turn these back into tensors before torch notices!
+    X_train = torch.tensor(X_train_bal, dtype=torch.float32)
+    y_train = torch.tensor(y_train_bal, dtype=torch.float32)
+    X_test = torch.tensor(X_test_raw, dtype=torch.float32)
+    y_test = torch.tensor(y_test_raw, dtype=torch.float32)
+
+    # print("Post split")
+    #
+    # print(f"Train positives: {y_train.sum().item()}")
+    # print(f"Train negatives: {(y_train == 0).sum().item()}")
+    #
+    # print(f"Test positives: {y_test.sum().item()}")
+    # print(f"Test negatives: {(y_test == 0).sum().item()}")
+
+    input_nodes = X.shape[1]
+    model = MLP(input_nodes)
+    data_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=100, shuffle=True,
+                             worker_init_fn=np.random.seed(1))
+
+    errors_train, errors_test, losses_train, losses_test = train_mlp(model, data_loader, y_train, num_epochs)
+
+    # lets try to get a rough idea of where we are.
+    evaluate_mlp(model, X_test, y_test)
+
+    return model, errors_train, errors_test, losses_train, losses_test  # get everything back.
+
+
+
+
+# gonna try to add some weird anti overfitting check to it, watch out.
+def train_mlp(model, data_loader, y_train, n_epoch=50, patience=5):
     print("Training MLP")
     # Initialize model weights
     model.apply(weights_init)
@@ -64,8 +129,14 @@ def train_mlp(model, data_loader, y_train, n_epoch=50):
     # object that decreases learning rate by half every 10 epochs
     scheduler = StepLR(optimizer, step_size=10, gamma=0.5)
 
+    # early stopping stuff coming in hot.
+    best_loss = np.inf
+    best_weights = None
+    patience_counter = 0
+    epochs_completed = 0
 
     for epoch in range(n_epoch):
+      epochs_completed += 1
       model.train()
       epoch_loss = 0
       # loop over batches
@@ -106,23 +177,32 @@ def train_mlp(model, data_loader, y_train, n_epoch=50):
       losses_train[epoch] = avg_loss
       errors_train[epoch] = 100 - accuracy
 
-      # Run whole dataset to get statistics -- normally wouldn't do this
-      # So we aren't! Simple as, really.
-      # pred_train = model(x_train)
-      # pred_test = model(x_test)
-      # _, predicted_train_class = torch.max(pred_train.data, 1)
-      # _, predicted_test_class = torch.max(pred_test.data, 1)
-      # errors_train[epoch] = 100 - 100 * (predicted_train_class == y_train).float().sum() / len(y_train)
-      # errors_test[epoch]= 100 - 100 * (predicted_test_class == y_test).float().sum() / len(y_test)
-      # losses_train[epoch] = loss_function(pred_train, y_train).item()
-      # losses_test[epoch]= loss_function(pred_test, y_test).item()
-      # print(f'Epoch {epoch:5d}, train loss {losses_train[epoch]:.6f}, train error {errors_train[epoch]:3.2f},  test loss {losses_test[epoch]:.6f}, test error {errors_test[epoch]:3.2f}')
+      # early stopping check
+      if avg_loss < best_loss - 1e-4: # as a place to start
+          best_loss = avg_loss
+          best_weights = model.state_dict().copy() # save our best weights as a checkpoint
+          patience_counter = 0
+      else:
+          patience_counter += 1
+          if patience_counter >= patience:
+              print(f"Early stopping requried sire. At epoch {epoch+1} — best loss: {best_loss:.4f}")
+              model.load_state_dict(best_weights) # restore our previous best model
+              # trim the zero padded tail off the arrays
+              losses_train = losses_train[:epoch + 1]
+              errors_train = errors_train[:epoch + 1]
+              break
 
-      # tell scheduler to consider updating learning rate
+
       model.train() # flip this back for the next epoch
+      # tell scheduler to consider updating learning rate
       scheduler.step()
 
       print(f"Epoch {epoch + 1:3d} | Loss: {avg_loss:.4f} | Train Acc: {accuracy:.1f}%")
+
+    return (errors_train[:epochs_completed],
+            errors_train[:epochs_completed],
+            losses_train[:epochs_completed],
+            losses_train[:epochs_completed])
 
     return errors_train, errors_test, losses_train, losses_test
 
@@ -155,7 +235,17 @@ def evaluate_mlp(model, x_test, y_test):
     print(f"\nConfusion Matrix:")
     print(f"  True Negatives  (correctly said normal)   : {tn}")
     print(f"  False Positives (incorrectly flagged)      : {fp}")
-    print(f"  False Negatives (missed pneumonia cases)   : {fn}  ← this is the dangerous one")
+    print(f"  False Negatives (missed abnormal cases)   : {fn}  ← this is the dangerous one")
     print(f"  True Positives  (correctly caught)         : {tp}")
     print(f"\nSensitivity (recall on positives): {tp/(tp+fn):.1%}")
     print(f"Specificity (recall on negatives): {tn/(tn+fp):.1%}")
+
+    # say that missing a sick paitent is twice as bad as a false alarm
+    beta = 2
+    for threshold in [0.50, 0.30, 0.20, 0.10, 0.05]:
+        predicted_class = (preds >= threshold).float().numpy()
+        f2 = fbeta_score(y_test.numpy(), predicted_class, beta=beta)
+        print(f"t={threshold:.2f} | F2: {f2:.4f}")
+
+
+

@@ -1,12 +1,12 @@
 import pandas as pd
 from dataloaderCreator import *
+from evaluationSuite import plot_training_curves
 from tokenizationProcess import * # need
 import spacy # small model, don't throw it on GPU.
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
-from createMLPStuff import create_mlp_model # we will want this.
 import re
-
+from mlp import create_mlp_model
 
 
 from mlp import MLP, evaluate_mlp  # bring our custom class in.
@@ -29,15 +29,10 @@ if __name__ == "__main__":
     print("Creating the DF")
     df = build_master_df(projections_path, reports_path)
 
-    all_problems = df['Problems'].dropna().str.split(';').explode().str.strip().str.lower()
-    print(all_problems.value_counts().head(20))
-
-    print(df['pneumonia_label'].value_counts())
-    print(df['pneumonia_label'].value_counts(normalize=True))
-
-    print("Creating the MLP")
-    # ok now we have to do the freaking NLP stuff in an attempt to understand this better.
-    nlp = spacy.load("en_core_web_sm")
-    num_epochs = 20
-    mlp_model = create_mlp_model(df, nlp, num_epochs)
-
+    # print("Creating the MLP")
+    # # ok now we have to do the freaking NLP stuff in an attempt to understand this better.
+    # modes = ["sparse", "medium", "full"]
+    modes = ["medium"]
+    for mode in modes:
+        model, errors_train, errors_test, losses_train, losses_test = create_mlp_model(df, mode)
+        plot_training_curves(losses_train, errors_train)

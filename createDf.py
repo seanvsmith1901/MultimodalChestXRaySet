@@ -8,13 +8,16 @@ def build_master_df(projections_path, reports_path):
   proj = proj[proj["projection"] == "Frontal"]
   df = proj.merge(rep[["uid", "findings", "impression", "Problems", "indication"]], on="uid", how="inner")
 
-  pneumonia_keywords = ["consolidation", "opacity", "opacities", "infiltrate",
-                        "pneumonia", "airspace", "alveolar"]
-
+  # new label - 0 if normal, 1 if abnormal
   def label_from_text(row):
     # don't put everythign in there, just a little bit.
-    text = str(row.get("indication", "")).lower()
-    return int(any(kw in text for kw in pneumonia_keywords))
+    text = str(row.get("Problems", "")).lower().strip()
+    return 0 if text == "normal" else 1
 
-  df["pneumonia_label"] = df.apply(label_from_text, axis=1)
+  df["abnormal_label"] = df.apply(label_from_text, axis=1)
+
+  # print(df["abnormal_label"].value_counts())
+  # print(df["abnormal_label"].value_counts(normalize=True))
+
+
   return df
