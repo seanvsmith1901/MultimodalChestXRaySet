@@ -2,6 +2,9 @@ import pandas as pd
 from dataloaderCreator import *
 from tokenizationProcess import * # need
 import spacy # small model, don't throw it on GPU.
+
+
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 

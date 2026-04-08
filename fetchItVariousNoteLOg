@@ -24,3 +24,8 @@ Specifically I want to try an ensemble model and an xgboost model.
 
 start with ensemble and maybe have an xgboost for reference. (started at 4:20 for reference)
 
+so turns out we are hitting the upper end of what is even possible within this datset within the constraints that I have hit.
+We are getting around a 0.83 AUC score REGARDLESS of model setup -- be it ensemble, single or XGboost.
+So I want to try negspacy before moving on - its a library that better tries to understand negation in a medical context.
+should be fun.
+messed around with medspacy, but that started brikcing immediately and I decided it wasn't worth it.
