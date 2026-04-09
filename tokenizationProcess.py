@@ -9,6 +9,7 @@ from negspacy.negation import Negex
 from negspacy.termsets import termset
 import medspacy
 
+# Tokenizatino through Negex, a better NLP model for text recognition.
 def build_nlp_pipeline():
     nlp = spacy.load("en_core_web_sm")
 
@@ -58,8 +59,49 @@ def tokenize_with_negation(text, nlp):
     return " ". join(tokens)
 
 
+# # The following is BERT time.
+#
+# from transformers import AutoTokenizer, AutoModel
+# import torch
+# import numpy as np
+#
+# def build_bert_pipeline():
+#     model_name = "emilyalsentzer/Bio_ClinicalBERT"
+#     tokenizer = AutoTokenizer.from_pretrained(model_name)
+#     model = AutoModel.from_pretrained(model_name)
+#     model.eval()  # inference mode, no training
+#     return tokenizer, model
 
+# def get_bert_embeddings(texts, tokenizer, bert_model, batch_size=32):
+#     """
+#     texts : a list of raw strings
+#     returns : numpy array of shape (n_texts, 768)
+#     """
+#     all_embeddings = []
+#
+#     for i in range(0, len(texts), batch_size):
+#         batch = texts[i: i + batch_size]
+#         print(f"embedding batch {i // batch_size + 1} / {len(texts) // batch_size + 1}")
+#
+#         encoded = tokenizer(
+#             batch,
+#             padding=True, # pad shorter sequences
+#             truncation=True, # cut off at max_length
+#             max_length=256, # that should be more than long enough
+#             return_tensors="pt", # return them in the pytorch format
+#         )
+#
+#         with torch.no_grad():
+#             outputs = bert_model(**encoded)
+#
+#         # use the [CLS] token embeddings as the sentence represnetation. CLS is the first token
+#         # bert trains it to summarize the whole imput
+#         cls_embeddings = outputs.last_hidden_state[:, 0, :] # shape: (batch, 768)
+#         all_embeddings.append(cls_embeddings)
+#
+#     return np.vstack(all_embeddings) # shape: (n_texts, 768)
 
+# negex flavor
 def get_clean_stuff(df, nlp, mode="sparse"):
     max_features = -1 # should brick if this doesn't go off correctly.
 
@@ -100,3 +142,31 @@ def get_clean_stuff(df, nlp, mode="sparse"):
     # X is now our feature matrix , where each row is a paitent, and each column is a wordweight
     return X, y, df # give those back to our other guy.
     # now that we have this, we should be able to feed this into the MLP.
+
+# # Bert flavored.
+# def get_clean_stuff(df, bert_tokenizer, bert_model, mode="medium"):
+#     if mode == "sparse":
+#         df["text"] = (df["indication"].fillna(""))
+#
+#     if mode == "medium":
+#         df["text"] = (
+#             df["indication"].fillna("") + " " +
+#             df["impression"].fillna("")
+#         )
+#
+#     if mode == "full":
+#         df["text"] = (
+#             df["indication"].fillna("") + " " +
+#             df["findings"].fillna("") + " " +
+#             df["impression"].fillna("")
+#             # do NOT put problems in here. bad idea.
+#         )
+#
+#     texts = df["text"].tolist()
+#     y = df["abnormal_label"].values
+#
+#     print("EXTRACTINGB BERT EMBEDDINGS.... THIS IS GOING TO TAK E AMINTUE ")
+#     X = get_bert_embeddings(texts, bert_tokenizer, bert_model)
+#
+#     print("embedding shape: ", X.shape) # should be 3814, 768
+#     return X, y

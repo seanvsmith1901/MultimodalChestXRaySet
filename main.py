@@ -10,6 +10,12 @@ from xgboost import XGBClassifier
 from sklearn.metrics import roc_auc_score
 from mlp import create_mlp_model, create_x_stuff
 
+import os
+os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "0"  # keep progress bars
+# suppress the safetensors conversion attempt entirely
+os.environ["SAFETENSORS_FAST_GPU"] = "0"
+
 from mlp import MLP, evaluate_mlp  # bring our custom class in.
 
 # AIGHT SO WE DID ALL OF THIS WRONGF
@@ -52,6 +58,7 @@ if __name__ == "__main__":
     # model_type = "single"
     # model, errors_train, errors_test, losses_train, losses_test = create_mlp_model(df, modes[0], model_type)
     # # plot_training_curves(losses_train, errors_train)
+
 
     model_type = "single"
     for mode in modes:

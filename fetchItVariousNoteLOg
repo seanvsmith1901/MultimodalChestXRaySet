@@ -29,3 +29,29 @@ We are getting around a 0.83 AUC score REGARDLESS of model setup -- be it ensemb
 So I want to try negspacy before moving on - its a library that better tries to understand negation in a medical context.
 should be fun.
 messed around with medspacy, but that started brikcing immediately and I decided it wasn't worth it.
+So after medspacy, I want to try BERT. Its a hugging face model that should be significantly better at recongizing the text in this dataset.
+unfortunatel, I worry that this is VERY extreme all things considered, but its worth a whirl. After this, we will probably migrate over to
+the CCN and make the jump to collab w/ vscode.
+
+for fun I tried bert.
+Training MLP
+************************************
+  t=0.50 | Sensitivity: 61.9% | Specificity: 87.1% | FN: 185 | FP: 36
+  t=0.30 | Sensitivity: 79.4% | Specificity: 57.6% | FN: 100 | FP: 118
+  t=0.20 | Sensitivity: 94.0% | Specificity: 25.2% | FN: 29 | FP: 208
+  t=0.10 | Sensitivity: 99.4% | Specificity: 10.1% | FN: 3 | FP: 250
+  t=0.05 | Sensitivity: 99.8% | Specificity: 7.9% | FN: 1 | FP: 256
+Test Accuracy : 71.1%
+Test AUC-ROC  : 0.8024
+
+Confusion Matrix:
+  True Negatives  (correctly said normal)   : 22
+  False Positives (incorrectly flagged)      : 256
+  False Negatives (missed abnormal cases)   : 1  ← this is the dangerous one
+  True Positives  (correctly caught)         : 485
+
+Sensitivity (recall on positives): 99.8%
+Specificity (recall on negatives): 7.9%
+Made everything worse.
+so far, my best results have been TFID with Negex, so thats what we are sticking with.
+the sad reality kinda is just that I don't have THAT much data to work with.

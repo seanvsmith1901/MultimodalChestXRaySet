@@ -46,7 +46,7 @@ def weights_init(layer_in):
         nn.init.kaiming_normal_(layer_in.weight)
         layer_in.bias.data.fill_(0.0)
 
-def create_x_stuff(old_df, mode):
+def create_x_stuff(df, mode):
     nlp = build_nlp_pipeline()
     num_epochs = 200
 
@@ -55,7 +55,8 @@ def create_x_stuff(old_df, mode):
     # this returns X and y as df's to try and use them in the train test split and dataloaders. Don't think its working as intended.
 
     # this uses a tokenizer to create a better representation of X and Y.
-    X, y, df = get_clean_stuff(old_df, nlp, mode=mode)  # returns a clean X and y that we will need for training later.
+
+    X, y, df = get_clean_stuff(df, nlp, mode)  # returns a clean X and y that we will need for training later.
 
     # print("Here is our shape ", X.shape)
     # print("Post conversion")
