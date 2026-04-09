@@ -55,3 +55,10 @@ Specificity (recall on negatives): 7.9%
 Made everything worse.
 so far, my best results have been TFID with Negex, so thats what we are sticking with.
 the sad reality kinda is just that I don't have THAT much data to work with.
+
+
+*** MLP WRITEUP TIME ***
+
+I'm pretty happy with what we have seen so far in the MLP, and now I sort of want a way to document what I have tried. this is going to be strange. 
+lets start with a pretty bad standard model, then add in the language processing, and then add in regex. I think messing with some differnet variables is also likely cool. 
+So is Bert worth keeping? How much NLP do I talk about? is it worth running a model with 0 NLP on this just to see what happens?
