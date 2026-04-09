@@ -8,8 +8,6 @@ import spacy
 from negspacy.negation import Negex
 from negspacy.termsets import termset
 import medspacy
-import logging
-logging.getLogger("PyRuSH").setLevel(logging.WARNING) # turn off warnings.
 
 def build_nlp_pipeline():
     nlp = spacy.load("en_core_web_sm")
@@ -32,7 +30,7 @@ def tokenize(text, nlp):
     ]
     return " ". join(tokens)
 
-negspacy flavor.
+# negspacy flavor
 def tokenize_with_negation(text, nlp):
     # instead of just returning tokens, prefix negated terms with NEG to TF-IDF treats them as distinc features.
 
