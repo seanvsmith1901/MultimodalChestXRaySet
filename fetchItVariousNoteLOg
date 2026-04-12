@@ -62,3 +62,10 @@ the sad reality kinda is just that I don't have THAT much data to work with.
 I'm pretty happy with what we have seen so far in the MLP, and now I sort of want a way to document what I have tried. this is going to be strange. 
 lets start with a pretty bad standard model, then add in the language processing, and then add in regex. I think messing with some differnet variables is also likely cool. 
 So is Bert worth keeping? How much NLP do I talk about? is it worth running a model with 0 NLP on this just to see what happens?
+
+Pretty happy with teh current MLP writeup, its not great but it shows some cool stuff. The actual writeup will be more professional. 
+
+for now, we are moving on to teh CNN -- and the problem is that I am using a different VENV than my 474 class
+so I need to re figure out cuda stuff for this PC bc I like it
+also, CUDA 13 is out and none of the LMM's seem to be aware of it, so thats a bit of a hassle. 
+

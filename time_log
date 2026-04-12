@@ -15,6 +15,7 @@
 3/12/2026 - 0.5 hours. working on making the MLP receive less informaiton (and perhpas throw out the MLP and replace
                        with an ensemble instead :) )
 4/8/2026 -  3 hours (4:20 - 7:20) Finished ensemble experimenting, turns out using Negex was the only real change. Probably as much as I am going to get out of this thing. 
+4/10/2026 - 2  (started at 3:50, ended at 5:50) Started on CNN. finished data exploration, finished CNN structure, now working on training loop. 
 
 
-Current Total: 15.25 / 30 hours
+Current Total: 17.25 / 30 hours
