@@ -69,3 +69,14 @@ for now, we are moving on to teh CNN -- and the problem is that I am using a dif
 so I need to re figure out cuda stuff for this PC bc I like it
 also, CUDA 13 is out and none of the LMM's seem to be aware of it, so thats a bit of a hassle. 
 
+
+*** CNN Time ***
+ok so 
+started the training loop, its running on my thing 
+its at least a couple of minutes per epoch, but so far its not going well. 
+hoping for better stuff tomorrow. 
+I wonder if the X rays are simply going to be too useful and the MLP will mean nothing, becuase I have been so interseted in NLP and whatnot.
+we shall see. 
+From there, we can mess with the architecture and whatnot and work on fusing the models together. 
+its gonna be really funny if I spend 10 hours on the MLP, 2 hours on the CNN, and then like 5 hours on the dataset. 
+YIPEE> 
