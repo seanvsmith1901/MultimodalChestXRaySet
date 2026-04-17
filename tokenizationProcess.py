@@ -137,7 +137,7 @@ def get_clean_stuff(df, nlp, mode="sparse"):
     )
 
     X = vectorizer.fit_transform(df["text_clean"]).toarray()
-    y = df["abnormal_label"].values
+    y = df["pneumonia_label"].values
 
     # X is now our feature matrix , where each row is a paitent, and each column is a wordweight
     return X, y, df # give those back to our other guy.
