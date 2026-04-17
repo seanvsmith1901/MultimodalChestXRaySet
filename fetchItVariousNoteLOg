@@ -80,3 +80,80 @@ we shall see.
 From there, we can mess with the architecture and whatnot and work on fusing the models together. 
 its gonna be really funny if I spend 10 hours on the MLP, 2 hours on the CNN, and then like 5 hours on the dataset. 
 YIPEE> 
+
+
+Forgot this existed
+ok so after running for 11 hours, we are getting... ok results. 
+turns out they were better than I thought, CheXNet only had an AUC of around 0.78
+I was getting an AUC of aorund 0.70
+So I thought "well fetch it, what are they doing differently"
+turns out they are using transfer leraning from a 121 layer ImageNet classifier thingy
+and then also doing some other funky business
+but mostly transfer leraning
+so my little CNN actually didn't do terrible -- he coudl do better sure, but he didn't do terrible. 
+
+So now I want to try this transfer learning thing, and see if that helps. 
+so we have to do a bunch of freezing and unfreezing and learn all that. 
+on top of the NLP that I was already doing. 
+this is great!
+also swapping back on the CNN for checking for pneumonia - because tahts what the paper did, and I want to spend the next couple of hours on replication. 
+with the intention of being like "ok, we can understand what they did", and then just swap the pneumonia lable for problems label
+and see if we can just say "hey there's a problem"
+and then combine that with my MLP to be like "hey, how likely are they to need to be seen ASAP?". 
+We might need to consult Dr. Smith to try and ask for like a comparative ranking on the diesease
+but then that causes another hurdle -- a small thing of pneumonia isn't life threatning, but a pneumohemothorax is
+so how do I weight those appropriately? and even then I have to recognize them appropriately. 
+so there's a lot to do here. 
+
+
+** Changes to implemen tnext time **
+have a good chawt going with Deepseek
+adapt the input images from grayscale to RBG so we can keep the weights, 
+implememnt teh unfreezing strategy and whatnot, 
+and then maybe download the whole dataset. 
+nothing to run overnight tonight, got too much other stuff to do. back to math!
+getting the current thing running is probably another hour or so of work which I don't have right now. 
+
+
+lets first make sure we adapt the iamge to RGB or whatever so the imagenet can understand it
+then unfreeze
+and then MAYBE dataset. 
+not sure how long its going to take to finetune the pre trianed model, but hopefully not that long.
+also lets make sure to shift our entire focus (of EVERYTHING ) back onto pneumonia, both for the MLP and teh CNN
+and then expand outward from there. 
+over the weekend it might be kind of cool to try and obtain a relative rankinig of the dieases in a triage score
+but thats REALLY hard and requires domain knowledge. focusing on JUST pneumonia might be helpful in understanding how badly an individual paitent needs to be seen. 
+
+ok so we have the thing working. I'm not sure if its actually great, but we are currently just stress testing it so I can run it over night. 
+... it seems to be working pretty ok at the moment. For now. 
+However, I want to sort of pivot the entire project. 
+I really want to focus on penumonia replication and a triage score
+based on impressions and all that, so I can try to "rank" paitents. 
+then, if we have extra time and because I want to, I want to try and maybe extend that to a bunch of other paitents
+and talk to a radiologist about it. that could be SUPER neat. 
+I don't have any funding or anything, which is a bit of a problem
+I would need them to do this becuase they think its interesting. Maybe dad will have some suggestions on how to best reimburse them for their time
+bc here's the thing -- Dr's cost a lot of money. I don't have a lot of money, espeically for this weird project. 
+
+CNN finetuning is now good to run overnight, but I want to get a little more time into this fetcher before we hard lock. 
+want to work more on the pneumonia lables we are using across the board. 
+
+
+So I am running into a bit of a problem. 
+I realized I have been referring to that CheXPert paper using the ChexNet dataset. 
+I am not using that dataset. 
+I am using a much smaller one. 
+As such, the CNN i am building is still essentially worthless. 
+im still gonna do it becuase I think its neat. 
+so there's that!
+
+however, 
+lets run this thing, discuss limitations of trying to do it this way
+and then just take the actual ChexPert dataset and test performance on my dataset 
+and MAYBE try to get it to do what I want it to do
+then we take our MLP
+figure out hte likelihood of various dieseases or wahtever
+and combine them for a triage score. 
+this would have been a lot quicker had I started with transfer leraning
+But I refuse! I decided I wanted to wade around in the mud first. Its been neat. 
+
