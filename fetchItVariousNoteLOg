@@ -157,3 +157,23 @@ and combine them for a triage score.
 this would have been a lot quicker had I started with transfer leraning
 But I refuse! I decided I wanted to wade around in the mud first. Its been neat. 
 
+ran into a bit of a pickle. 
+labelling this is strange. 
+I am tempted to try and test for something other than pneumonia, simply because of the lmit of the sample size. 
+we also can't fix it, because I can't swap to the CheXPert dataset -- it does'nt have the tabular data that I am looking for. 
+
+Back at it again -- yeah the transfer learning actually didn't work great, topped out about 0.6. 
+I think we can try some other things, it appeared to better with less unfreezing. 
+
+I really want to stick with pneumonia for now, as opposed to abnormal. We can swap to abnormal later if we have more time. 
+but for now, lets stick with abnormal. 
+lets try something: lets go with uhh
+rigth now, try the other transfer learnign tricks
+actually right now at 12 lets switch 
+
+GOT IT 
+so !! 
+I think part of the slow down that I have been seeing is that I am trying to use RBG instead of gray scale
+i think that that is what is causing my epochs to take so much longer to train -- I really couldn't figure it out. 
+lets try to fix it and see how much that is slowing me down. 
+
