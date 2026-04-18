@@ -177,3 +177,21 @@ I think part of the slow down that I have been seeing is that I am trying to use
 i think that that is what is causing my epochs to take so much longer to train -- I really couldn't figure it out. 
 lets try to fix it and see how much that is slowing me down. 
 
+YIPEEEE
+ok that was slowing me WAAAY down. 
+so lets try and get this imagenet fine tuning thing done. 
+then we can work on the CheXPert finetuning set
+then we cna work on combining them
+and we can run my CNN overnight. 
+
+
+so now what we need to do
+is save all our MLP stuff for pneumonia and whatnot
+and also run all my CNN stuff to make sure that its all running in the background. 
+I should start on the fine tuning of the other project, but we have already spent 2 hours on this. 
+so we will fine tune chexpert tomorrow and go from there. 
+even if we never fine tune it, just doing it this way should be fine. 
+
+so I went back and created a DF that could toggle betweten poenumonia and uhh anormal labels, so thats nice. 
+I let the two densenet finetune over the next couple of hours while I transition back to math. 
+so lets work on that for a while and let this dude chug. 

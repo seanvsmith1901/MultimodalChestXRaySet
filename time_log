@@ -20,7 +20,7 @@
 4/12/2026 - 1 hour (9:50-10:50pm). Finished the loop, or at least the first iteration. will test more stuff tomorrow. 
 4/15/2026 - 2 hours (5:05 - 5:21) (started again at 5:58, finished at 7:32)
 4/16/2026 - 2.5 hours (9:33 - 12:03 ) Realized a lot of things. Working on better pneumonia labels, finished tranfer learning on the CNN, traning it overnight, and working on revamping MLP for pneumonia again with better label ideas. 
-4/17/2026 - (4:11 - )
+4/17/2026 - 2 hours (4:11 - 6:11) Not happy with the way finetuning was working on my model, so I created a new, less aggressive freeze schedule. Also decided I wanted to run results for both abnormal and pneumonia just in case, so those are both running right now. Need to make the MLP do both as well just to see what happens. then, once those are done, I can work on combining htem tomorrow. Might go in and try to get it to classify all 14 (??) in the dataset, but the inability of labels in the indiana university set is difficult to say the least. we shall see what happens. 
 
-Current Total: 23.5 / 30 hours
-6.5 hours to go. 
+Current Total: 25.5 / 30 hours
+4.5 hours to go. 
