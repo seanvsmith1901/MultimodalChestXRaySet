@@ -7,7 +7,7 @@ from torch.optim.lr_scheduler import StepLR
 from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 from sklearn.metrics import fbeta_score
 import spacy # small model, don't throw it on GPU.
-from tokenizationProcess import get_clean_stuff, build_nlp_pipeline
+from Scripts.tokenizationProcess import get_clean_stuff, build_nlp_pipeline
 from imblearn.over_sampling import SMOTE
 from torch.utils.data import DataLoader
 from torch.utils.data import TensorDataset, DataLoader
