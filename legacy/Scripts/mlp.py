@@ -7,17 +7,18 @@ from torch.optim.lr_scheduler import StepLR
 from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 from sklearn.metrics import fbeta_score
 import spacy # small model, don't throw it on GPU.
-from Scripts.tokenizationProcess import get_clean_stuff, build_nlp_pipeline
+from legacy.Scripts.tokenizationProcess import get_clean_stuff, build_nlp_pipeline
 from imblearn.over_sampling import SMOTE
 from torch.utils.data import DataLoader
 from torch.utils.data import TensorDataset, DataLoader
 
-probability_flag = 0.50
+
 
 
 class MLP(nn.Module):
-    def __init__(self, input_nodes=500): # this is specified by the number of keywords that we need.
+    def __init__(self, input_nodes=500, probability_flag=0.5): # this is specified by the number of keywords that we need.
         super(MLP, self).__init__()
+        self.probability_flag = probability_flag
 
         self.network = nn.Sequential(
             # block 1
@@ -220,7 +221,7 @@ def train_mlp(model, data_loader, y_train, n_epoch=50, patience=5):
 
       all_probs = torch.sigmoid(all_preds) # convert back to probabilities from logits in the loss function .
 
-      predicted_class = (all_probs >= probability_flag).float() # threshold at 0.5
+      predicted_class = (all_probs >= model.probability_flag).float() # threshold at 0.5
       accuracy = 100 * (predicted_class == all_labels).float().mean()
 
       losses_train[epoch] = avg_loss
@@ -254,14 +255,13 @@ def train_mlp(model, data_loader, y_train, n_epoch=50, patience=5):
             losses_train[:epochs_completed])
 
 
-
 def evaluate_mlp(model, x_test, y_test):
     print("************************************")
     model.eval()
     with torch.no_grad():
         logits = model(x_test).squeeze(1)
         preds  = torch.sigmoid(logits)
-        predicted_class = (preds >= probability_flag).float()
+        predicted_class = (preds >= model.probability_flag).float()
 
     acc = 100 * (predicted_class == y_test).float().mean().item()
     auc = roc_auc_score(y_test.numpy(), preds.numpy())

@@ -195,3 +195,10 @@ even if we never fine tune it, just doing it this way should be fine.
 so I went back and created a DF that could toggle betweten poenumonia and uhh anormal labels, so thats nice. 
 I let the two densenet finetune over the next couple of hours while I transition back to math. 
 so lets work on that for a while and let this dude chug. 
+
+
+aight so now that I have the DF and most of the preliminary models...
+I need to create a unified validate train / test split and go from there. 
+so we are COMPLETELY fixing the file sctructure because I can't stand the lack of organization anymore. 
+so here we go. 
+working on unified dataloaders right now. 

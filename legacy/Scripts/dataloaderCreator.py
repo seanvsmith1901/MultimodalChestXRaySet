@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
-from createDf import build_master_df # decided to pull this out and put it somewhere else.
+from legacy.Scripts.createDf import build_master_df # decided to pull this out and put it somewhere else.
 
 class ChestXRayDataset(Dataset):
   def __init__(self, records, image_dir, transform=None):

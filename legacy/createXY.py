@@ -1,6 +1,6 @@
 import pandas as pd
 from dataloaderCreator import *
-from Scripts.tokenizationProcess import * # need
+from legacy.Scripts.tokenizationProcess import * # need
 import spacy # small model, don't throw it on GPU.
 
 

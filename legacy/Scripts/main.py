@@ -1,14 +1,14 @@
 import pandas as pd
-from dataloaderCreator import *
-from evaluationSuite import plot_training_curves
-from tokenizationProcess import * # need
+from legacy.Scripts.dataloaderCreator import *
+from legacy.Scripts.evaluationSuite import plot_training_curves
+from legacy.Scripts.tokenizationProcess import * # need
 import spacy # small model, don't throw it on GPU.
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 import re
 from xgboost import XGBClassifier
 from sklearn.metrics import roc_auc_score
-from mlp import create_mlp_model, create_x_stuff
+from legacy.Scripts.mlp import create_mlp_model, create_x_stuff
 
 import os
 os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
@@ -16,7 +16,7 @@ os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "0"  # keep progress bars
 # suppress the safetensors conversion attempt entirely
 os.environ["SAFETENSORS_FAST_GPU"] = "0"
 
-from mlp import MLP, evaluate_mlp  # bring our custom class in.
+from legacy.Scripts.mlp import MLP, evaluate_mlp  # bring our custom class in.
 
 # AIGHT SO WE DID ALL OF THIS WRONGF
 # well kind of. we now have the idea of X and y and all that
