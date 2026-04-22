@@ -13,7 +13,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from src.data.nlp_preprocessing import *
 from src.training.train_mlp import train_mlp
 from scripts.ensemble_evalute import evaluate_mlp
-from src.data.nlp_preprocessing import build_nlp_pipeline
+from src.data.preprocessing import build_nlp_pipeline
 probability_flag = 0.50
 
 
@@ -54,7 +54,7 @@ def create_x_stuff(df, mode):
     num_epochs = 200
 
     # creates X and Y based on penumonia values and the DF.
-    print("starting the model creation process ")
+    # print("starting the model creation process ")
     # this returns X and y as df's to try and use them in the train test split and dataloaders. Don't think its working as intended.
 
     # this uses a tokenizer to create a better representation of X and Y.
@@ -89,6 +89,37 @@ def create_x_stuff(df, mode):
     return X_train, y_train, X_test, y_test, X, df
 
 
+def create_mlp_model_from_splits(train_df, val_df, test_df, mode, text_amount="medium", model_type="singe"):
+
+    nlp = build_nlp_pipeline()
+    num_epochs = 50
+
+
+    train_df = prepare_text_features(train_df.copy(), nlp, mode=text_amount)
+    val_df = prepare_text_features(val_df.copy(), nlp, mode=text_amount)
+    test_df = prepare_text_features(test_df.copy(), nlp, mode=text_amount)
+
+    X_train, y_train, X_val, y_val, X_test, y_test, vectorizer = create_tfidf_features(
+        train_df, val_df=val_df, test_df=test_df, mode=text_amount
+    )
+
+    # just use smote, can't hurt can it?
+    smote = SMOTE(random_state=42)
+    X_train, y_train = smote.fit_resample(X_train, y_train)
+
+    import pickle
+    vectorizer_path = f"../models/vectorizer_{mode}_{text_amount}.pkl"
+    with open(vectorizer_path, "wb") as f:
+        pickle.dump(vectorizer, f)
+    print(f"✅ Vectorizer saved to: {vectorizer_path}")
+
+    input_nodes = X_train.shape[1]  # ← This is where X is defined!
+    model = MLP(input_nodes)
+
+    return create_mlp(X_train, y_train, X_val, y_val, X_test, y_test, num_epochs, model)
+
+
+
 def create_mlp_model(df, mode, model_type):
     X_train, y_train, X_test, y_test, X, df = create_x_stuff(df, mode)
     num_epochs = 200
@@ -114,17 +145,27 @@ def create_mlp_model(df, mode, model_type):
 
     return model, errors_train, errors_test, losses_train, losses_test  # get everything back.
 
-def create_mlp(X, X_train, y_train, X_test, y_test, num_epochs, model):
+# no longer accepts X as an argument. 
+def create_mlp(X_train, y_train, X_val, y_val, X_test, y_test, num_epochs, model):
 
-    data_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=100, shuffle=True,
-                             worker_init_fn=np.random.seed(1))
+    #  cast htem into ints
+    X_train = torch.tensor(X_train, dtype=torch.float32)
+    y_train = torch.tensor(y_train, dtype=torch.float32)
+
+    X_val = torch.tensor(X_val, dtype=torch.float32)
+    y_val = torch.tensor(y_val, dtype=torch.float32)
+
+    X_test = torch.tensor(X_test, dtype=torch.float32)
+    y_test = torch.tensor(y_test, dtype=torch.float32)
+
+
+    data_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=100, shuffle=True)
 
     errors_train, errors_test, losses_train, losses_test = train_mlp(model, data_loader, y_train, num_epochs)
 
-    # lets try to get a rough idea of where we are.
-    evaluate_mlp(model, X_test, y_test)
+    # evaluate_mlp(model, X_test, y_test)
 
-    return model, errors_train, errors_test, losses_train, losses_test  # get everything back.
+    return model.state_dict(), errors_train, errors_test, losses_train, losses_test  # get everything back.
 
 
 def create_mlp_ensemble(X, X_train, y_train, X_test, y_test, num_epochs):

@@ -1,0 +1,27 @@
+============================================================
+TRIAGE SUMMARY - PNEUMONIA
+============================================================
+
+Generated: 20260421_1910
+Total Patients: 573
+True Positives (has condition): 101
+True Negatives (no condition): 472
+
+SCORE DISTRIBUTION
+----------------------------------------
+Mean Score:   28.85
+Median Score: 23.50
+Min Score:    8.38
+Max Score:    86.28
+
+RISK LEVEL BREAKDOWN
+----------------------------------------
+HIGH Risk:   70 (12.2%)
+MEDIUM Risk: 315 (55.0%)
+LOW Risk:    188 (32.8%)
+
+MODEL PERFORMANCE (AUC)
+----------------------------------------
+MLP:      0.7951
+CNN:      0.6014
+Ensemble: 0.7878

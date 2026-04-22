@@ -10,7 +10,7 @@ from sklearn.metrics import roc_auc_score
 
 
 # aight lets just see if this works
-def create_cnn_model(df, image_dir, device, mode, num_epochs=23):
+def create_cnn_model(train_df, val_df, image_dir, device="cpu", mode="Pneumonia", num_epochs=23):
     model = FinetunedDenseNet()
     model = model.to(device)
     # no longer need to do the weird he initialization, as I am using a pre-trained model. 
@@ -21,13 +21,16 @@ def create_cnn_model(df, image_dir, device, mode, num_epochs=23):
 
 
     # Adam optimizer, standard params. 
-    train_loader, test_loader, pos_weight = get_dataloaders(df, image_dir, device) # after that I got a bunch of defaults, I'll change em when I get there.
+
+    # train_df, val_df, image_dir, device, test_size=0.2,
+    #                 batch_size=128, image_size=224, num_workers=0
+    train_loader, val_loader, pos_weight = get_dataloaders(train_df, val_df, image_dir, device) # after that I got a bunch of defaults, I'll change em when I get there.
 
     loss_function = nn.BCEWithLogitsLoss(pos_weight=pos_weight)  # trying a different loss function, we shall see.
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate) # 
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", patience=3, factor=0.5)
 
-    history, cnn_weights = train_model(model, train_loader, test_loader, num_epochs, device, pos_weight, mode=mode)
+    cnn_weights, history = train_model(model, train_loader, val_loader, num_epochs, device, pos_weight, mode=mode)
     return cnn_weights, history 
 
 
@@ -63,6 +66,7 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
     history = {"train_loss": [], "val_loss": [], "val_auc": []}
 
     for epoch in range(num_epochs):
+        print("Starting epoch ", epoch)
         # first lets make sure we have all the appropriate layers that we want. 
         if unfreezer.should_update(epoch):
             optimizer = unfreezer.update(epoch, optimizer)

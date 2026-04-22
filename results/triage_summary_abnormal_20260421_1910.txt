@@ -1,0 +1,27 @@
+============================================================
+TRIAGE SUMMARY - ABNORMAL
+============================================================
+
+Generated: 20260421_1910
+Total Patients: 573
+True Positives (has condition): 365
+True Negatives (no condition): 208
+
+SCORE DISTRIBUTION
+----------------------------------------
+Mean Score:   53.67
+Median Score: 54.50
+Min Score:    3.11
+Max Score:    99.33
+
+RISK LEVEL BREAKDOWN
+----------------------------------------
+HIGH Risk:   318 (55.5%)
+MEDIUM Risk: 169 (29.5%)
+LOW Risk:    86 (15.0%)
+
+MODEL PERFORMANCE (AUC)
+----------------------------------------
+MLP:      0.8261
+CNN:      0.7440
+Ensemble: 0.8426

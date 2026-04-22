@@ -202,3 +202,33 @@ I need to create a unified validate train / test split and go from there.
 so we are COMPLETELY fixing the file sctructure because I can't stand the lack of organization anymore. 
 so here we go. 
 working on unified dataloaders right now. 
+
+so we are REALLY worried abotu data leakage. I got all the stuff going and the organiziatino is.. better. 
+However!!!
+I am still kinda stuck on getting a validatino set, so tahts what we are workign on rn. 
+
+Old writeup for my triage goal -- I was moving stuff around and this didn't make the cut but I wanted to keep it somewhere. 
+"""
+so what we wnat to do here 
+is actually construct a means for us to use our previously created models 
+and use them to try and construct a "Pneumonia likely " / triage score. 
+how is this going to do this?
+grab our various best models (there are a couple of considerations I need to make). 
+mostly, I need to grab our RAW CNN (will need to retrain him), our IMAGENET-112 finetuned, and our CHEXPERT finetuned models
+then for our MLP, we can try a couple of different combinations for the NLP
+I also want to create a version of each for abnormal labels
+which means we need to create 2 df's -- one for pneumonia and one for abnormal. 
+here's the thing -- I don't think I have the labelled data necessary to be able to replicate the CHexpert paper
+its a matter of data labelling -- I don't have clear labels. Heck, even just indentifying that a paitent has pneumonia from our labelled data
+is not a sure thing. 
+But if we have 2 results
+Pneumonia and Abnormal
+and we can compare them
+we can see which one showcase what I want to better. 
+in reality, I am really interested in both, so I will probably do both. 
+The triage score then becomes "how likely are they to be sick given all of our notes". 
+if I was better at identifying WHAT was wrong, I could give them an additional ranking as well. 
+however, I don't have access to that sort of information... yet. Might be worth looking into in the future. 
+There's gotta be a way we can try to account for that in our stuff, right?
+so lets go about rewriting everything to do waht I want them to do and go from there. 
+"""

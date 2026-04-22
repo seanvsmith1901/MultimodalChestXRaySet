@@ -1,3 +1,5 @@
+Sean Smith -- Time Log. 
+
 2/17/2026 - 2 hours. Writing proposal and started dataset hunting
 2/18/2026 - 1 hour. Switched datasets, trying a different one.
 2/19/2026 - 1 hour. Finished the proposal and sifted around for yet another data set.
@@ -13,7 +15,7 @@
                     shifted to abnormalities. Rounded of the MLP with reasonable results at abnormality detection from
                     incident (the least specific form of triage entering)
 3/12/2026 - 0.5 hours. working on making the MLP receive less informaiton (and perhpas throw out the MLP and replace
-                       with an ensemble instead :) )
+                       with an ensemble instead)
 4/8/2026 -  3 hours (4:20 - 7:20) Finished ensemble experimenting, turns out using Negex was the only real change. Probably as much as I am going to get out of this thing. 
 4/10/2026 - 2  (started at 3:50, ended at 5:50) Started on CNN. finished data exploration, finished CNN structure, now working on training loop. 
 4/11/2026 - 45 minutes. conitnued working on CNN training loop. 
@@ -23,7 +25,10 @@
 4/17/2026 - 2 hours (4:11 - 6:11) Not happy with the way finetuning was working on my model, so I created a new, less aggressive freeze schedule. Also decided I wanted to run results for both abnormal and pneumonia just in case, so those are both running right now. Need to make the MLP do both as well just to see what happens. then, once those are done, I can work on combining htem tomorrow. Might go in and try to get it to classify all 14 (??) in the dataset, but the inability of labels in the indiana university set is difficult to say the least. we shall see what happens. 
 4/18/2026 -- 30 minutes (10:26 -- 10:56) setting up a few more things to run overnight before we try to combine a bunch of stuff. 
 4/20/2026 -- 3 hours, 45 minutes. (3:05 -- 6:50) time to combine a bunch of stuff and get some preliminary results. Also did a TON of refactoring to make everythigh worth the way that I wanted to. 
-4/21/2026 -- (4:00 -- )
+4/21/2026 -- 2 hours, 15 minutes (3:50 -- 7:05) worked on preventing dataleakage, unifying everything, and now retraining things in such a way that everything gets saved without data leakage and I can get it later. geeze that took a while. I'm still not finished, per se, but I need to wait for stuff to train, and that typically takes around 40 mintues or so. Be back later. We're back and we finished everythign. 
 
-Current Total: 26 / 30 hours
-15 minutes.  
+Proposal and Dataset Selection: 6 hours
+MLP Development: 9 hours
+CNN development: 9.25 hours
+Integration and Refactoring: 7.5 hours
+Total Time: 34 hours
