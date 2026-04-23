@@ -1,32 +1,32 @@
 {
   "models": {
     "mlp_abnormal": {
-      "auc": 0.764877502634352,
+      "auc": 0.8350237091675448,
       "file_path": "..\\models\\best_mlp_abnormal_medium.pth",
-      "timestamp": "2026-04-22T22:22:32.642161",
+      "timestamp": "2026-04-22T23:04:26.493795",
       "metadata": {},
-      "previous_best": null
+      "previous_best": 0.764877502634352
     },
     "cnn_abnormal": {
-      "auc": 0.4780031612223393,
+      "auc": 0.7477344573234983,
       "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
-      "timestamp": "2026-04-22T22:22:32.699502",
+      "timestamp": "2026-04-23T02:42:45.157298",
       "metadata": {},
-      "previous_best": null
+      "previous_best": 0.7461011591148576
     },
     "mlp_pneumonia": {
-      "auc": 0.7848527437489512,
+      "auc": 0.7974597247860378,
       "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
-      "timestamp": "2026-04-22T22:23:08.502718",
+      "timestamp": "2026-04-23T05:17:09.390193",
       "metadata": {},
-      "previous_best": null
+      "previous_best": 0.7870343178385635
     },
     "cnn_pneumonia": {
-      "auc": 0.5440615036079879,
+      "auc": 0.6392012082564189,
       "file_path": "..\\models\\best_cnn_densenet_pneumonia.pth",
-      "timestamp": "2026-04-22T22:23:08.599108",
+      "timestamp": "2026-04-23T04:56:11.909631",
       "metadata": {},
-      "previous_best": null
+      "previous_best": 0.5440615036079879
     }
   },
   "history": [
@@ -56,6 +56,48 @@
       "auc": 0.5440615036079879,
       "file_path": "..\\models\\best_cnn_densenet_pneumonia.pth",
       "timestamp": "2026-04-22T22:23:08.599108",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_abnormal",
+      "auc": 0.8350237091675448,
+      "file_path": "..\\models\\best_mlp_abnormal_medium.pth",
+      "timestamp": "2026-04-22T23:04:26.493795",
+      "metadata": {}
+    },
+    {
+      "model_name": "cnn_abnormal",
+      "auc": 0.7461011591148576,
+      "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
+      "timestamp": "2026-04-22T23:04:26.601865",
+      "metadata": {}
+    },
+    {
+      "model_name": "cnn_abnormal",
+      "auc": 0.7477344573234983,
+      "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
+      "timestamp": "2026-04-23T02:42:45.157298",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.7870343178385635,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-23T04:56:11.810178",
+      "metadata": {}
+    },
+    {
+      "model_name": "cnn_pneumonia",
+      "auc": 0.6392012082564189,
+      "file_path": "..\\models\\best_cnn_densenet_pneumonia.pth",
+      "timestamp": "2026-04-23T04:56:11.909631",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.7974597247860378,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-23T05:17:09.390193",
       "metadata": {}
     }
   ]

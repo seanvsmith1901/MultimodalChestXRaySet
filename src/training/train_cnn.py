@@ -33,7 +33,7 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
     paitence_counter = 0
     paitence = 10
     best_epoch = 0
-    bset_model_state = None
+    best_model_state = None
 
     unfreezer = ProgressiveUnfreezer(model)
 
@@ -112,7 +112,7 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
             best_val_auc = val_auc
             best_epoch = epoch
             patience_counter = 0 # reset
-            bset_model_state = model.state_dict().copy()
+            best_model_state = model.state_dict().copy()
             # title = f"Best_densenet_{mode}.pth"
             # torch.save(model.state_dict(), title)
             print(f"Best new model! AUC {best_val_auc:.4f}")
@@ -123,7 +123,7 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
         
         if paitence_counter >= paitence:
             print("Early stoopping at epoch ", epoch)
-            model.load_state_dict(bset_model_state)
+            model.load_state_dict(best_model_state)
             break
 
 
@@ -143,6 +143,9 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
         history["train_loss"].append(avg_train_loss)
         history["val_loss"].append(avg_val_loss)
         history["val_auc"].append(val_auc)
+
+    if best_model_state is not None:
+        model.load_state_dict(best_model_state)
 
     return model.state_dict(), history # this should return the best model and the history thereof. 
 
