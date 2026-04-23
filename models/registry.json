@@ -1,0 +1,62 @@
+{
+  "models": {
+    "mlp_abnormal": {
+      "auc": 0.764877502634352,
+      "file_path": "..\\models\\best_mlp_abnormal_medium.pth",
+      "timestamp": "2026-04-22T22:22:32.642161",
+      "metadata": {},
+      "previous_best": null
+    },
+    "cnn_abnormal": {
+      "auc": 0.4780031612223393,
+      "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
+      "timestamp": "2026-04-22T22:22:32.699502",
+      "metadata": {},
+      "previous_best": null
+    },
+    "mlp_pneumonia": {
+      "auc": 0.7848527437489512,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-22T22:23:08.502718",
+      "metadata": {},
+      "previous_best": null
+    },
+    "cnn_pneumonia": {
+      "auc": 0.5440615036079879,
+      "file_path": "..\\models\\best_cnn_densenet_pneumonia.pth",
+      "timestamp": "2026-04-22T22:23:08.599108",
+      "metadata": {},
+      "previous_best": null
+    }
+  },
+  "history": [
+    {
+      "model_name": "mlp_abnormal",
+      "auc": 0.764877502634352,
+      "file_path": "..\\models\\best_mlp_abnormal_medium.pth",
+      "timestamp": "2026-04-22T22:22:32.642161",
+      "metadata": {}
+    },
+    {
+      "model_name": "cnn_abnormal",
+      "auc": 0.4780031612223393,
+      "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
+      "timestamp": "2026-04-22T22:22:32.699502",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.7848527437489512,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-22T22:23:08.502718",
+      "metadata": {}
+    },
+    {
+      "model_name": "cnn_pneumonia",
+      "auc": 0.5440615036079879,
+      "file_path": "..\\models\\best_cnn_densenet_pneumonia.pth",
+      "timestamp": "2026-04-22T22:23:08.599108",
+      "metadata": {}
+    }
+  ]
+}

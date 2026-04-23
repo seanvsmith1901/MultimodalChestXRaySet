@@ -232,3 +232,10 @@ however, I don't have access to that sort of information... yet. Might be worth 
 There's gotta be a way we can try to account for that in our stuff, right?
 so lets go about rewriting everything to do waht I want them to do and go from there. 
 """
+
+so where do I want to go from here?
+aight so
+I think we should first perfect our actual model, because the CNN is NOT very good, which is dissapointing. 
+then we should move onto the chexpert, and see how much better that set is vanilla, and then how good it can be with fine tuning (same schedule)
+then from there, we should do something SILLY
+we should move onto trying to understand how to diagnos the DIFFERENT issues, see if that is possible. 

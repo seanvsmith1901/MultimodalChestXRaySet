@@ -15,25 +15,12 @@ def create_cnn_model(train_df, val_df, image_dir, device="cpu", mode="Pneumonia"
     model = model.to(device)
     # no longer need to do the weird he initialization, as I am using a pre-trained model. 
 
-    # lets start with the CheXNet init params cause why not
-    learning_rate = 0.0001 # decay by factor of 10 each time validation loss platueas after epoch
-    # lets also make it 10x smaller, 1e-4 should work better. 
-
-
-    # Adam optimizer, standard params. 
-
     # train_df, val_df, image_dir, device, test_size=0.2,
     #                 batch_size=128, image_size=224, num_workers=0
     train_loader, val_loader, pos_weight = get_dataloaders(train_df, val_df, image_dir, device) # after that I got a bunch of defaults, I'll change em when I get there.
 
-    loss_function = nn.BCEWithLogitsLoss(pos_weight=pos_weight)  # trying a different loss function, we shall see.
-    optimizer = optim.AdamW(model.parameters(), lr=learning_rate) # 
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", patience=3, factor=0.5)
-
     cnn_weights, history = train_model(model, train_loader, val_loader, num_epochs, device, pos_weight, mode=mode)
     return cnn_weights, history 
-
-
 
 
 def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", pos_weight=0.5, mode="penumonia"):
@@ -44,7 +31,7 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
 
     best_val_auc = 0.0
     paitence_counter = 0
-    paitence = 5
+    paitence = 10
     best_epoch = 0
     bset_model_state = None
 
@@ -52,7 +39,7 @@ def train_model(model, train_loader, val_loader, num_epochs=23, device="cuda", p
 
     optimizer = torch.optim.AdamW(
         filter(lambda p: p.requires_grad, model.parameters()), 
-        lr=1e-3, 
+        lr=1e-4, # lets tune this way down, see if it does anything.  
         weight_decay=1e-4
     )
 
