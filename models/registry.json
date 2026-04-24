@@ -8,18 +8,18 @@
       "previous_best": 0.764877502634352
     },
     "cnn_abnormal": {
-      "auc": 0.7477344573234983,
+      "auc": 0.7505795574288725,
       "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
-      "timestamp": "2026-04-23T02:42:45.157298",
+      "timestamp": "2026-04-23T15:59:06.956886",
       "metadata": {},
-      "previous_best": 0.7461011591148576
+      "previous_best": 0.7477344573234983
     },
     "mlp_pneumonia": {
-      "auc": 0.7974597247860378,
+      "auc": 0.9374945151382184,
       "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
-      "timestamp": "2026-04-23T05:17:09.390193",
+      "timestamp": "2026-04-23T22:59:37.309921",
       "metadata": {},
-      "previous_best": 0.7870343178385635
+      "previous_best": 0.9349495392716103
     },
     "cnn_pneumonia": {
       "auc": 0.6392012082564189,
@@ -98,6 +98,34 @@
       "auc": 0.7974597247860378,
       "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
       "timestamp": "2026-04-23T05:17:09.390193",
+      "metadata": {}
+    },
+    {
+      "model_name": "cnn_abnormal",
+      "auc": 0.7505795574288725,
+      "file_path": "..\\models\\best_cnn_densenet_abnormal.pth",
+      "timestamp": "2026-04-23T15:59:06.956886",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.9316586222027206,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-23T19:21:02.086055",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.9349495392716103,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-23T19:44:38.561504",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.9374945151382184,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-23T22:59:37.309921",
       "metadata": {}
     }
   ]
