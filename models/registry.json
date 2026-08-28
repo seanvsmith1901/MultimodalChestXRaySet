@@ -15,11 +15,11 @@
       "previous_best": 0.7477344573234983
     },
     "mlp_pneumonia": {
-      "auc": 0.9374945151382184,
+      "auc": 0.980893592004703,
       "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
-      "timestamp": "2026-04-23T22:59:37.309921",
+      "timestamp": "2026-04-29T12:48:27.332670",
       "metadata": {},
-      "previous_best": 0.9349495392716103
+      "previous_best": 0.9374945151382184
     },
     "cnn_pneumonia": {
       "auc": 0.6392012082564189,
@@ -126,6 +126,13 @@
       "auc": 0.9374945151382184,
       "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
       "timestamp": "2026-04-23T22:59:37.309921",
+      "metadata": {}
+    },
+    {
+      "model_name": "mlp_pneumonia",
+      "auc": 0.980893592004703,
+      "file_path": "..\\models\\best_mlp_pneumonia_medium.pth",
+      "timestamp": "2026-04-29T12:48:27.332670",
       "metadata": {}
     }
   ]

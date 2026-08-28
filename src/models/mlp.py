@@ -111,7 +111,7 @@ def create_mlp_model_from_splits(train_df, val_df, test_df, mode, text_amount="m
     vectorizer_path = f"../models/vectorizer_{mode}_{text_amount}.pkl"
     with open(vectorizer_path, "wb") as f:
         pickle.dump(vectorizer, f)
-    print(f"✅ Vectorizer saved to: {vectorizer_path}")
+    print(f"Vectorizer saved to: {vectorizer_path}")
 
     input_nodes = X_train.shape[1]  # ← This is where X is defined!
     model = MLP(input_nodes)

@@ -239,3 +239,20 @@ I think we should first perfect our actual model, because the CNN is NOT very go
 then we should move onto the chexpert, and see how much better that set is vanilla, and then how good it can be with fine tuning (same schedule)
 then from there, we should do something SILLY
 we should move onto trying to understand how to diagnos the DIFFERENT issues, see if that is possible. 
+
+
+so it took approximately 30 seconds for me to load in chexpert
+and realize that my pneumonia lables are trash. 
+this is like the current cutting edge chest labelling thing and it currently gets around 0.49 AUC
+
+
+THere is STILL something wrong but I don't know what. Chexpert still struggles on my freakin dataset for reasons unknown unto me. 
+now clearly, I think there is a problem with my data. 
+but I got a buddy coming through thats supposed to help me wiht the NLP stuff, so lets look at that super quick. 
+I haven't touched this since then, Lucy was NOT helpful. basically just told me to throw bert at it, which I had already done. 
+
+Uhh so basically the problem is that the labels for this thing kinda suck, or at least trying to generate them. 
+The real problem is that pneumonia is NOT very common on this dataset, and there's not a good way to try and create more cases, 
+as I just don't have the amount of data required for this kind of problem. 
+I think. It has been 2 or 3 months since i have touched this lol. 
+
